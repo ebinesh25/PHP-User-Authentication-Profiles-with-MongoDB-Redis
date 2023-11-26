@@ -79,9 +79,8 @@
       </div>
     </div>
   </div>
-
   <script>
-  $(document).ready(function() {
+    $(document).ready(function() {
     $('#signup-form').validate({
       rules: {
         'first-name': {
@@ -145,7 +144,7 @@
     });
 
     $.validator.addMethod('strongPassword', function(value, element) {
-   
+  
     return /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&.]{7,}$/.test(value);
     
 
@@ -153,7 +152,7 @@
 
 
   });
-  </script>
 
+  </script>
 </body>
 </html>
