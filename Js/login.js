@@ -1,4 +1,10 @@
 $(document).ready(function(){
+    $.get("http://localhost/Guvi-login/php/get_email.php", function(email) {
+        if (email != "no email") {
+            $("#email").val(email);
+        }
+    });
+
     $('#login-form').validate({
         rules:{
             email:{
@@ -25,11 +31,7 @@ $(document).ready(function(){
                 data: $(form).serialize(),
                 success: function(response) {
                     console.log('Success:', response);
-                    if (!isNaN(response))
-                    {
-                        window.location.href = 'http://localhost/Guvi-login/profile.html?user_id='+ response;
-                    } 
-                    else if (response.trim() === "invalid password")
+                    if (response.trim() === "invalid password")
                     {
                         // console.log("Alert redirect to profile");
                         alert('Password and email do not match');
@@ -37,6 +39,11 @@ $(document).ready(function(){
                     else if (response.trim() === "invalid email") 
                     {
                         alert('Email does not exist. Register as a new user!');
+                    }
+                    else if(!isNaN(response.trim()))
+                    {
+                        window.location.href = 'http://localhost/Guvi-login/profile.html?user_id=' + response.trim();
+
                     }
                 },
                 error: function(error) {

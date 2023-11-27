@@ -1,4 +1,12 @@
 <?php 
+include 'my_sql_connection.php';
+
+// Create a new Redis instance
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
+session_start();
+
+
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -13,21 +21,41 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Email exists, now check if password matches
         $row = $result->fetch_assoc();
         $hashed_password = $row["PASSWORD"];
+        $user_id = $row["id"];
     
 
         if (password_verify($password, $hashed_password)) {
-            $user_id = $row["id"];
-            echo $user_id;
-            // header("Location: ../profile.html");
+            // Retrieve user details from Redis
+            $redisKey = 'user:' . $email;
+            $userDetailsJson = $redis->get($redisKey);
+            if ($userDetailsJson === false) {
+                // User details not found in Redis, retrieve from MongoDB
+                $collection = 'users.profile';
+                $document = $collection->findOne(['email' => $email]);
+                $userDetails = array(
+                    'firstname' => $document['firstname'],
+                    'lastname' => $document['lastname'],
+                    'email' => $document['email'],
+                    'country' => $document['country'],
+                    'city' => $document['city'],
+                    'state' => $document['state']
+                );
+                // Store user details in Redis for future use
+                $redis->set($redisKey, json_encode($userDetails));
+            } else {
+                $userDetails = json_decode($userDetailsJson, true);
+            }
 
+            // Store user details in session
+            $_SESSION["userDetails"] = $userDetails;
+
+            echo $user_id;
             exit;
         } else {
-            // Password does not match
             echo "invalid password";
-
         }
-    } else {
-        // Email does not exist
+    } 
+    else {
         echo "invalid email";
     }
 }

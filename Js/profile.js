@@ -6,6 +6,7 @@ $(document).ready(function() {
     method: 'GET',
     dataType: 'json',
     success: function(data) {
+      console.log(data);
       // Update the div with the retrieved data
       $('#fname').text(data.firstname);
       $('#lname').text(data.lastname);

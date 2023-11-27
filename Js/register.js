@@ -49,11 +49,11 @@ $(document).ready(function() {
         data: $(form).serialize(),
         success: function(response) {
           console.log('Success:', response);
-          if (error.responseText === 'Email already exists') {
-            alert('Email already exists');
+          if (response != 'Email already exists') {
+                window.location.href = 'http://localhost/Guvi-login/login.html';
           } else {
-          
-            window.location.href = 'http://localhost/Guvi-login/login.html';
+            alert('Email already exists');
+
           }              
         }
       });
