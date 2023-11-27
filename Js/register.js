@@ -49,8 +49,8 @@ $(document).ready(function() {
         data: $(form).serialize(),
         success: function(response) {
           console.log('Success:', response);
-          // Handle successful registration, e.g., redirect to another page
-          // You can redirect the user or perform other actions upon successful registration
+          window.location.href = 'http://localhost/Guvi-login/profile.html'; // Redirect upon success
+
         },
         error: function(error) {
           console.log('Error:', error);
