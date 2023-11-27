@@ -1,5 +1,5 @@
 <?php 
-include 'my_sql_connection.php';
+include 'connection.php';
 
 // Create a new Redis instance
 $redis = new Redis();
@@ -9,17 +9,23 @@ session_start();
 
 
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+// if($_SERVER["REQUEST_METHOD"] == "POST"){
+    // $email = $_POST["email"];
+    // $password = $_POST["password"];
+    $email = "ebinesh2511@gmail.com";
+    $password = "@ebinesh.A25";
 
     // Check if email exists in the database
-    $sql = "SELECT * FROM user_profile WHERE email = '$email'";
+    $sql = "SELECT * FROM credentials WHERE email = '$email'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
+    echo mysqli_num_rows($result);
+
+    if (mysqli_num_rows($result) > 0) {
         $row = $result->fetch_assoc();
-        $hashed_password = $row["PASSWORD"];
+        print_r($row);
+
+        $hashed_password = $row["password"];
         $user_id = $row["id"];
     
         // To verify passwords
@@ -59,6 +65,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     else {
         echo "invalid email";
     }
-}
+// }
 
 ?>

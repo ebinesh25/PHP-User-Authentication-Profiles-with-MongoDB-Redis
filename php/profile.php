@@ -1,6 +1,6 @@
 <?php 
-$user_id = $_GET['user_id'] ?? '';
-// $user_id = '11';
+// $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : '';
+$user_id = '12';
 
 $manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
 
@@ -37,6 +37,7 @@ else
         $result = json_decode($userDetailsJson, true);
     }
 }
+
 if ($result) {
     echo json_encode($result);
 } else {
