@@ -1,13 +1,10 @@
 <?php
-// Establish connection to MySQL
-$servername = "localhost"; 
-$username = "root"; 
-$password = "";
-$dbname = "guvi";
+include 'connection.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-$mongo = new MongoDB\Driver\Manager("mongodb://localhost:27017/?directConnection=true");
-
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
+session_start
+();
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -45,6 +42,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $row = $result->fetch_assoc();
     $user_id = $row["id"];
 
+    
+    // Store user details in Redis
+    $redisKey = 'user:' . $user_id;
+    $userDetails = array(
+        'firstname' => $firstname,
+        'lastname' => $lastname,
+        'email' => $email,
+        'country' => $country,
+        'city' => $city,
+        'state' => $state
+    );
+    $redis->set($redisKey, json_encode($userDetails));
+
     // Store user data in MongoDB
     $collection = 'users.profile';
     $document = [
@@ -57,13 +67,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'user_id' => $user_id
     ];
 
+
     $bulk = new MongoDB\Driver\BulkWrite;
     $bulk->insert($document);
+    $mongo->executeBulkWrite($collection, $bulk);
 
-    try {
-        $mongo->executeBulkWrite($collection, $bulk);
-        echo "New record created successfully";
-    } catch (MongoDB\Driver\Exception\Exception $e) {
-        echo "Error: " . $e->getMessage();
+    if($mongo){
+        echo "Saved";
     }
+    else{
+        echo "Notsaved";
+    }
+    
 }
