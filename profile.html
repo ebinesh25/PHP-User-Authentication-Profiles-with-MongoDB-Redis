@@ -13,6 +13,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0"></script>
+  
+  <script src="js/profile.js"></script>
 </head>
 <body class="vh-100 background-radial-gradient" >
       <div class="container py-5 h-100">
@@ -25,12 +27,8 @@
               </div>
               <div class="row g-0">
                   <div class="col-md-4 gradient-custom text-center text-white"
-                    style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                      alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-                    <h5>Marie Horwitz</h5>
-                    <p>Web Designer</p>
-                    <i class="far fa-edit mb-5"></i>
+                    style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem; background-color: hsl(218, 41%, 15%);">
+                    
                   </div>
                   <div class="col-md-8">
                     <div class="card-body p-4">
@@ -38,24 +36,25 @@
                       <hr class="mt-0 mb-4">
                       <div class="row pt-1">
                         <div class="col-6 mb-3">
-                          <h6>Email</h6>
-                          <p class="text-muted">info@example.com</p>
+                          <h6>First Name</h6>
+                          <span class="text-muted" id ="fname">FirstName</span>
+                        </div>
+                        <div class="col-6 mb-3" >
+                          <h6>Last Name</h6>
+                          <span class="text-muted" id ="lname">LastName</p>
                         </div>
                         <div class="col-6 mb-3">
-                          <h6>Phone</h6>
-                          <p class="text-muted">123 456 789</p>
+                          <h6>Country</h6>
+                          <span class="text-muted"  id ="country">Country</span>
                         </div>
-                      </div>
-                      <h6>Projects</h6>
-                      <hr class="mt-0 mb-4">
-                      <div class="row pt-1">
-                        <div class="col-6 mb-3">
-                          <h6>Recent</h6>
-                          <p class="text-muted">Lorem ipsum</p>
+                        <div class="col-6 mb-3" >
+                          <h6>State</h6>
+                          <span class="text-muted"  id ="state">State</span>
                         </div>
-                        <div class="col-6 mb-3">
-                          <h6>Most Viewed</h6>
-                          <p class="text-muted">Dolor sit amet</p>
+                        </div>
+                        <div class="col-6 mb-3" >
+                          <h6>City</h6>
+                          <span class="text-muted"  id ="city">City</span>
                         </div>
                       </div>
                       <div class="d-flex justify-content-start">

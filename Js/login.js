@@ -25,13 +25,17 @@ $(document).ready(function(){
                 data: $(form).serialize(),
                 success: function(response) {
                     console.log('Success:', response);
-                    if (response.trim() === "valid profile") {
-                        window.location.href = 'http://localhost/Guvi-login/profile.html';
-                    } else if (response.trim() === "invalid password") {
-                        console.log("Alert redirect to profile");
-
+                    if (!isNaN(response))
+                    {
+                        window.location.href = 'http://localhost/Guvi-login/profile.html?user_id='+ response;
+                    } 
+                    else if (response.trim() === "invalid password")
+                    {
+                        // console.log("Alert redirect to profile");
                         alert('Password and email do not match');
-                    } else if (response.trim() === "invalid email") {
+                    } 
+                    else if (response.trim() === "invalid email") 
+                    {
                         alert('Email does not exist. Register as a new user!');
                     }
                 },
