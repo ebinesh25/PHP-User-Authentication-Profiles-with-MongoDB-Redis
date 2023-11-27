@@ -1,6 +1,6 @@
 <?php 
-// $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : '';
-$user_id = '12';
+$user_id = isset($_GET['user_id']) ? $_GET['user_id'] : '';
+// $user_id = '12';
 
 $manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
 
