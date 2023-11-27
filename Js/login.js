@@ -40,7 +40,7 @@ $(document).ready(function(){
                     {
                         alert('Email does not exist. Register as a new user!');
                     }
-                    else if(!isNaN(response.trim()))
+                    else
                     {
                         window.location.href = 'http://localhost/Guvi-login/profile.html?user_id=' + response.trim();
 

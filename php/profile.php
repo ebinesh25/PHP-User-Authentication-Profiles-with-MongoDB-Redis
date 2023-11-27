@@ -1,6 +1,6 @@
 <?php 
-$user_id = $_GET['user_id'] ?? '';
-// $user_id = '11';
+// $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : '';
+$user_id = '12';
 
 $manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
 
@@ -9,9 +9,10 @@ $redis = new Redis();
 $redis->connect('127.0.0.1', 6379);
 session_start();
 
+
 if(isset($_SESSION["userDetails"])) 
 {
-    // User details found in session
+    // From Session
     $result = $_SESSION["userDetails"];
 } 
 else
@@ -36,6 +37,7 @@ else
         $result = json_decode($userDetailsJson, true);
     }
 }
+
 if ($result) {
     echo json_encode($result);
 } else {

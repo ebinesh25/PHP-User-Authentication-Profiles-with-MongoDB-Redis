@@ -1,5 +1,4 @@
 <?php 
-// Establish connection to MySQL
 $servername = "localhost"; 
 $username = "root"; 
 $password = "";
