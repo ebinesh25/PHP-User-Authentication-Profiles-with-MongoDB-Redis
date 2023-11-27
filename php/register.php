@@ -3,12 +3,7 @@ include 'connection.php';
 
 $redis = new Redis();
 $redis->connect('127.0.0.1', 6379);
-session_start
-();
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+session_start();
 
 // Process form data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

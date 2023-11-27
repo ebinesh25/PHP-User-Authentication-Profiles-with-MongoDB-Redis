@@ -18,18 +18,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Email exists, now check if password matches
         $row = $result->fetch_assoc();
         $hashed_password = $row["PASSWORD"];
         $user_id = $row["id"];
     
+        // To verify passwords
 
         if (password_verify($password, $hashed_password)) {
             // Retrieve user details from Redis
             $redisKey = 'user:' . $email;
             $userDetailsJson = $redis->get($redisKey);
             if ($userDetailsJson === false) {
-                // User details not found in Redis, retrieve from MongoDB
+
+                // Not in Redis, retrieve from MongoDB
                 $collection = 'users.profile';
                 $document = $collection->findOne(['email' => $email]);
                 $userDetails = array(
@@ -40,13 +41,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     'city' => $document['city'],
                     'state' => $document['state']
                 );
-                // Store user details in Redis for future use
+                // Storing in redis
                 $redis->set($redisKey, json_encode($userDetails));
             } else {
                 $userDetails = json_decode($userDetailsJson, true);
             }
 
-            // Store user details in session
+            // storing in session
             $_SESSION["userDetails"] = $userDetails;
 
             echo $user_id;

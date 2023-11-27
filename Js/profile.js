@@ -1,6 +1,5 @@
 
 $(document).ready(function() {
-  // Make an AJAX request to profile.php
   $.ajax({
     url: 'http://localhost/Guvi-login/php/profile.php',
     method: 'GET',

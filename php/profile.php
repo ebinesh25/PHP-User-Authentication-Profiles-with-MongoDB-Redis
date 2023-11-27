@@ -9,9 +9,10 @@ $redis = new Redis();
 $redis->connect('127.0.0.1', 6379);
 session_start();
 
+
 if(isset($_SESSION["userDetails"])) 
 {
-    // User details found in session
+    // From Session
     $result = $_SESSION["userDetails"];
 } 
 else
