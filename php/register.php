@@ -5,16 +5,13 @@ $username = "root";
 $password = "";
 $dbname = "guvi";
 
-
-$mongo = new MongoDB\Driver\Manager("mongodb://localhost:27017/?directConnection=true");
 $conn = new mysqli($servername, $username, $password, $dbname);
+$mongo = new MongoDB\Driver\Manager("mongodb://localhost:27017/?directConnection=true");
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-
 
 // Process form data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,17 +21,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $country = $_POST["country"];
     $city = $_POST["city"];
     $state = $_POST["state"];
-    
     $password = $_POST["password"];
 
+    // Check if email already exists in MySQL
+    $sql = "SELECT * FROM credentials WHERE email = '$email'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        echo "Email already exists";
+        exit;
+    }
 
-    
     // Store email and password in MySQL
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO user_profile (email, password) VALUES ('$email', '$hashed_password')";
+    $sql = "INSERT INTO credentials (email, password) VALUES ('$email', '$hashed_password')";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+        exit;
+    }
 
-
-    $sql = "SELECT * FROM user_profile WHERE email = '$email'";
+    // Get the user_id from MySQL
+    $sql = "SELECT id FROM credentials WHERE email = '$email'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     $user_id = $row["id"];
@@ -59,13 +65,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "New record created successfully";
     } catch (MongoDB\Driver\Exception\Exception $e) {
         echo "Error: " . $e->getMessage();
-    }
-
-
-
-    if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }

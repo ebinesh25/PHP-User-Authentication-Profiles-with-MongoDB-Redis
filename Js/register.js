@@ -49,24 +49,18 @@ $(document).ready(function() {
         data: $(form).serialize(),
         success: function(response) {
           console.log('Success:', response);
-          window.location.href = 'http://localhost/Guvi-login/profile.html'; // Redirect upon success
-
-        },
-        error: function(error) {
-          console.log('Error:', error);
-          // Handle registration errors, e.g., show error message to the user
-          // You can display an error message or take appropriate actions upon error
+          if (error.responseText === 'Email already exists') {
+            alert('Email already exists');
+          } else {
+          
+            window.location.href = 'http://localhost/Guvi-login/login.html';
+          }              
         }
       });
     }
   });
 
   $.validator.addMethod('strongPassword', function(value, element) {
- 
-  return /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&.]{7,}$/.test(value);
-  
-
-});
-
-
+    return /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&.]{7,}$/.test(value);
+  });
 });
