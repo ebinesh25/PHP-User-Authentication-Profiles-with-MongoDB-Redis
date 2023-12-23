@@ -4,41 +4,46 @@ include 'connection.php';
 // Create a new Redis instance
 $redis = new Redis();
 $redis->connect('127.0.0.1', 6379);
-session_start();
+// session_start();
 
-
-
-
-// if($_SERVER["REQUEST_METHOD"] == "POST"){
-    // $email = $_POST["email"];
-    // $password = $_POST["password"];
-    $email = "ebinesh2511@gmail.com";
-    $password = "@ebinesh.A25";
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    // $email = "sibiebi2002@gmail.com";
+    // $password = "@ebinesh.A25";
 
     // Check if email exists in the database
     $sql = "SELECT * FROM credentials WHERE email = '$email'";
     $result = $conn->query($sql);
 
-    echo mysqli_num_rows($result);
+    // echo mysqli_num_rows($result);
 
     if (mysqli_num_rows($result) > 0) {
         $row = $result->fetch_assoc();
-        print_r($row);
+        // print_r($row);
 
-        $hashed_password = $row["password"];
+        $hashed_password = trim($row["password"]);
         $user_id = $row["id"];
-    
-        // To verify passwords
 
+        // To verify passwords
         if (password_verify($password, $hashed_password)) {
+
+
             // Retrieve user details from Redis
             $redisKey = 'user:' . $email;
             $userDetailsJson = $redis->get($redisKey);
             if ($userDetailsJson === false) {
 
                 // Not in Redis, retrieve from MongoDB
-                $collection = 'users.profile';
-                $document = $collection->findOne(['email' => $email]);
+                $filter = ['email' => $email];
+                $options = [];
+
+                $query = new MongoDB\Driver\Query($filter, $options);
+                $cursor = $mongo->executeQuery('guvi.users.profile', $query);
+
+                $document = current($cursor->toArray());
+
+
                 $userDetails = array(
                     'firstname' => $document['firstname'],
                     'lastname' => $document['lastname'],
@@ -49,6 +54,7 @@ session_start();
                 );
                 // Storing in redis
                 $redis->set($redisKey, json_encode($userDetails));
+
             } else {
                 $userDetails = json_decode($userDetailsJson, true);
             }
@@ -65,6 +71,6 @@ session_start();
     else {
         echo "invalid email";
     }
-// }
+}
 
 ?>

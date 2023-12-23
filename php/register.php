@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $redis->set($redisKey, json_encode($userDetails));
 
     // Store user data in MongoDB
-    $collection = 'users.profile';
+    $collection = 'guvi.users.profile';
     $document = [
         'firstname' => $firstname,
         'lastname' => $lastname,
@@ -67,6 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $bulk->insert($document);
     $mongo->executeBulkWrite($collection, $bulk);
 
+    
+
     if($mongo){
         echo "Saved";
     }
@@ -75,3 +77,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
 }
+?>
