@@ -2,16 +2,6 @@
 
 This project is a robust User Authentication and Profile Management System developed using PHP, JavaScript, jQuery, Redis, and MongoDB. It offers secure user registration, login functionality, and efficient profile management.
 
-## Screenshots
-
-![index](output/index.png?raw=true)
-![login](output/login.png?raw=true)
-![Login1](output/Login1.png?raw=true)
-![Login3](output/Login3.png?raw=true)
-![Signup0](output/Signup0.png?raw=true)
-![signup1](output/signup1.png?raw=true)
-![profile](output/profile.png?raw=true)
-
 ## Features
 
 - **User Authentication:** Secure registration and login with password hashing for enhanced security.
@@ -36,6 +26,20 @@ Once the server is running, you can:
 - Register a new user by filling out the registration form.
 - Log in using your email and password.
 - View and manage your profile efficiently.
+
+## Screenshots
+
+Index page:
+![index](output/index.png?raw=true)
+Login Page:
+![login](output/login.png?raw=true)
+![Login1](output/Login1.png?raw=true)
+![Login3](output/Login3.png?raw=true)
+Signup Page:
+![Signup0](output/Signup0.png?raw=true)
+![signup1](output/signup1.png?raw=true)
+Profile Page:
+![profile](output/profile.png?raw=true)
 
 ## Contributing
 
