@@ -1,5 +1,9 @@
 
 $(document).ready(function() {
+  // Get the user_id value from the URL
+  var urlParams = new URLSearchParams(window.location.search);
+  var user_id = urlParams.get('user_id');
+
   $.ajax({
     url: 'http://localhost/Guvi-login/php/profile.php',
     method: 'GET',
@@ -15,15 +19,15 @@ $(document).ready(function() {
       $('#email').text(data.email);
 
       console.log('User ID: ' + data.user_id);
-        console.log('First Name: ' + data.firstname);
-        console.log('Last Name: ' + data.lastname);
-        console.log('Country: ' + data.country);
-        console.log('Email: ' + data.email);
-        console.log('City: ' + data.city);
-        console.log('State: ' + data.state);
+      console.log('First Name: ' + data.firstname);
+      console.log('Last Name: ' + data.lastname);
+      console.log('Country: ' + data.country);
+      console.log('Email: ' + data.email);
+      console.log('City: ' + data.city);
+      console.log('State: ' + data.state);
     },
     error: function(xhr, status, error) {
-      console.log('AJAX request failed:', error);
+      console.log('AJAX request failed:'+ error);
     }
   });
 });

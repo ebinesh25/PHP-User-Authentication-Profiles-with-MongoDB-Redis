@@ -4,7 +4,7 @@ include 'connection.php';
 // Create a new Redis instance
 $redis = new Redis();
 $redis->connect('127.0.0.1', 6379);
-// session_start();
+session_start();
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $email = $_POST["email"];
@@ -45,12 +45,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
                 $userDetails = array(
-                    'firstname' => $document['firstname'],
-                    'lastname' => $document['lastname'],
-                    'email' => $document['email'],
-                    'country' => $document['country'],
-                    'city' => $document['city'],
-                    'state' => $document['state']
+                    'firstname' => $document->firstname,
+                    'lastname' => $document->lastname,
+                    'email' => $document->email,
+                    'country' => $document->country,
+                    'city' => $document->city,
+                    'state' => $document->state
                 );
                 // Storing in redis
                 $redis->set($redisKey, json_encode($userDetails));
@@ -59,8 +59,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $userDetails = json_decode($userDetailsJson, true);
             }
 
-            // storing in session
+            // storing user ID in session
             $_SESSION["userDetails"] = $userDetails;
+            $_SESSION["userID"] = $user_id;
 
             echo $user_id;
             exit;

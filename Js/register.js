@@ -42,6 +42,7 @@ $(document).ready(function() {
         equalTo: 'Passwords do not match'
       }
     },
+    
     submitHandler: function(form) {
       $.ajax({
         type: 'POST',
@@ -60,7 +61,7 @@ $(document).ready(function() {
     }
   });
 
-  $.validator.addMethod('strongPassword', function(value, element) {
+  $.validator.addMethod('strongPassword', function(value) {
     return /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&.]{7,}$/.test(value);
   });
 });
